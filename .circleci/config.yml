@@ -1,24 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: '~/cli-test'
-    docker:
-      - image: node:carbon
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install npm wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build application
-          command: 'npm run build'
-  build_docker_image:
     machine: true
     working_directory: '~/cli-test'
     steps:
@@ -37,5 +19,4 @@ workflows:
   version: 2
   build:
     jobs:
-      - build
       - build_docker_image
