@@ -5,7 +5,7 @@ jobs:
     working_directory: '~/cli-test'
     steps:
       - checkout
-      - run: docker login -u cult -p .>9%@8F8Y\Roz$oK8M
+      - run: docker login -u cult --password-stdin .>9%@8F8Y\Roz$oK8M
 
       # build the application image
       - run: docker build -t cult/cli-test .
