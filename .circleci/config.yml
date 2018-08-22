@@ -18,8 +18,24 @@ jobs:
       - run:
           name: Build application
           command: 'npm run build'
+  build_docker_image:
+    machine: true
+    working_directory: '~/cli-test'
+    steps:
+      - checkout
+      - run: |
+         docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+     # build the application image
+     - run: docker build -t $DOCKER_USER/cli-test:$CIRCLE_BRANCH .
+
+     # deploy the image
+     - run: docker push $DOCKER_USER/cli-test:$CIRCLE_BRANCH
+
+
 workflows:
   version: 2
   build:
     jobs:
       - build
+      - build_docker_image
